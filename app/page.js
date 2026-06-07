@@ -10,7 +10,7 @@ const CAT_COLORS = {
   Diet:'#84CC16',Sleep:'#A78BFA','Recovery Protocol':'#06B6D4',
   Breathwork:'#EC4899',Circadian:'#F97316',Supplement:'#F59E0B',
   Biohacking:'#00D4AA',Peptide:'#8B5CF6',Medication:'#F43F5E',
-  Exercise:'#3B82F6',Other:'#94A3B8',
+  Exercise:'#3B82F6',Other:'#94A3B8',  // Exercise maps legacy CSV 'Exercise' col → Indoor
 };
 
 function bandInfo(sos){
@@ -184,7 +184,7 @@ export default function Home(){
                   `Context: ${r.ctx}`
                 ];
                 if(r.acts.length)lines.push(`Actions: ${r.acts.map(a=>a.name).join(', ')}`);
-                lines.push('');lines.push('▶ Click to see action impact');
+                lines.push('');lines.push('▶ Click to log entry for this day');
                 return lines;
               }
             }
@@ -405,7 +405,7 @@ export default function Home(){
     if(!fDate){showToast('Please select a date');return;}
     if(!fState){showToast('Please select a dominant state');return;}
     if(!fVS||!fHRV||!fHR){showToast('VitalzScore, HRV and Heart Rate are required');return;}
-    const dt=new Date(fDate+'T12:00:00');
+    const dt=new Date(fDate+'T00:00:00');
     const row={
       Date:fDate,LoginEmail:'manual@entry',
       VitalzScore:fVS,HRV:fHRV,HR:fHR,Deep:fDeep,
@@ -846,7 +846,7 @@ export default function Home(){
                 <div className="chart-hdr">
                   <div>
                     <div className="chart-title">Health Trajectory</div>
-                    <div className="chart-sub">{results.length}-day pattern — click events to see action impact</div>
+                    <div className="chart-sub">{results.length}-day pattern — tap events to see what drove the move</div>
                   </div>
                   <div style={{display:'flex',gap:8,alignItems:'center'}}>
                     <div className="view-btns">
